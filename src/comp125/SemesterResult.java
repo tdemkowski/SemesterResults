@@ -18,10 +18,9 @@ public class SemesterResult {
 	 * @param mark
 	 */
 	public void setMark(int idx, double mark) {
-		if(idx >=0 && idx < marks.length)
-			marks[idx] = mark;
-		else
-			System.out.println("Error: Index out of bounds");
+		if(idx < 0 || idx >= marks.length)
+			return;
+		marks[idx] = Math.max(0, Math.min(100, mark));
 	}
 
 	/**
@@ -81,9 +80,9 @@ public class SemesterResult {
 	 */
 	//WORKING
 	public double getMark(int idx) {
-		if(idx >= 0 && idx <= marks.length)
-			return marks[idx];
-		return 0.0;
+		if(idx < 0 || idx >= marks.length)
+			return 0;
+		return marks[idx];
 	}
 
 	/**
@@ -218,15 +217,10 @@ public class SemesterResult {
 	 * who get marks on the higher side of a grade)
 	 */
 	public boolean equals(SemesterResult other) {
-		boolean scan = true;
-		for(int i = 0;scan && i<marks.length;i++) {
-			for(int j = 0; j<marks.length;j++) {
-				if(getGrades()[i] == other.getGrades()[j]) {
-					if(!(count(getGrades()[i]) == (count(other.getGrades()[j]))))
-						return false;
-				}
-			}
-		}
+		String[] possibleGrades = {"F", "P", "Cr", "D", "HD"};
+		for(int i=0; i < possibleGrades.length; i++) 
+			if(count(possibleGrades[i]) != other.count(possibleGrades[i]))
+				return false;
 		return true;
 	}
 
