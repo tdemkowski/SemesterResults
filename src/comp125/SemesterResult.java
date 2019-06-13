@@ -236,7 +236,9 @@ public class SemesterResult {
 	 * @param other
 	 */
 	public SemesterResult(SemesterResult other) {
-
+		marks = new double[4];
+		for(int i=0; i < marks.length; i++)
+			marks[i] = other.marks[i];
 	}
 
 	public String toString() {
